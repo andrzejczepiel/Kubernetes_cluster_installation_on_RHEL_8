@@ -99,7 +99,9 @@ Download network definition files, download those file to home directory of a us
 NOTE:  there are many other network definitions you can use, calico, is an example here.
 
     # su - kube_user
-    $ cd /home/kube_user/
+    
+Being in kube_user home directory: /home/kube_user/ run below commands (you may use any other user, kube_user is an example)
+
     $ wget https://docs.projectcalico.org/v3.3/getting-started/kubernetes/installation/hosted/rbac-kdd.yaml
     $ wget https://docs.projectcalico.org//v3.10/manifests/calico.yaml
 
