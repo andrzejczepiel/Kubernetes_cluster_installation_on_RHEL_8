@@ -7,7 +7,7 @@ You have to be aware that Kubernetes installation requires minimum 2 virtual CPU
 That is why if you want to run it in AWS, it wil not work on Free Tier instance t2.micro.
 In my case I was using t3a.medium instance type.
 Infrastructure was build using terraform deployment. 
-(you can check my other terrafrom repositories on https://github.com/andrzejczepiel)
+(you can check my other terrafrom repositories on [Link] https://github.com/andrzejczepiel )
 
 **You can use this manual for installation in cloud or on premisses. If you want to use it on different OS than RedHat, make suitable adjustments in commands.**
 
