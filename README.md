@@ -88,14 +88,14 @@ Install required kubernetes packages
 
     # yum install kubeadm kubelet kubectl kubernetes-cni -y
 
-Enable both services and star Docker service
+Enable both services and start Docker service
 
     # systemctl enable kubelet.service
     # systemctl enable docker.service
     # service docker start
 
 
-Download network definition files, download those file to home directory of a user which will manage your cluster
+Download network definition files, download those files to home directory of a user which will manage your cluster
 NOTE:  there are many other network definitions you can use, calico, is an example here.
 
     # su - kube_user
@@ -126,7 +126,7 @@ Copy config file to kube_user home directory and change permissions
 
 
 To join a node (minion) to a cluster run command on a node which you want to be part of your cluster.
-Command which is dispayed as result of 
+Command which is dispayed as result of above executed kubeadm init command
 
     $ sudo kubeadm init --pod-network-cidr=192.168.0.0/16 --apiserver-advertise-address=10.0.1.1
 
@@ -134,8 +134,8 @@ will look similar to this:
 
     $ sudo kubeadm join 10.0.1.1:6443 --token yjp4ep.plt0maylaxemggdq --discovery-token-ca-cert-hash sha256:4ad8121486fe267e1a80100fd5ac86049b0214fe7fae3f10aa923a3d056e782a
 
-If by any chance you do not know node join token you can generate with below command:
-get kubernetes kubadm token list and CA hash
+If by any chance you do not know node join token you can generate it with below command:
+Get kubernetes kubadm token:
 
     $ sudo kubeadm token list > node_join_token
 
