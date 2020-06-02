@@ -12,13 +12,13 @@ Infrastructure was build using terraform deployment.
 
 One of the requirement for Kubernetes is disabling swap, run below command:
 
-`# swapoff -a`
+  `# swapoff -a`
 
 Add "kube_user" user to sudoers file without password, this user will be used to manage your Kubernetes cluser and make calls
 to API server with kubectl client, I am using NOPASSWD option so I do not have to provide password, you may force it otherwise.
 Keep in mind, I am running it in my personal AWS lab.
 
-`# echo "kube_user        ALL=(ALL)       NOPASSWD: ALL" >> /etc/sudoers`
+  `# echo "kube_user        ALL=(ALL)       NOPASSWD: ALL" >> /etc/sudoers`
 
 I am also enabling IP forwarding on my system:
 
@@ -176,4 +176,5 @@ Get CA cert hash
 After that you can join a node to a cluster
 
 To verify run:
+
 `$ kubectl get nodes`
