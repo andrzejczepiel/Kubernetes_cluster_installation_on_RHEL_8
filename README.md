@@ -22,9 +22,9 @@ Keep in mind, I am running it in my personal AWS lab.
 
 I am also enabling IP forwarding on my system:
 
-`# echo "net.ipv4.ip_forward = 1" >> /etc/sysctl.conf`
+          `# echo "net.ipv4.ip_forward = 1" >> /etc/sysctl.conf`
 
-`# sysctl -p`
+          `# sysctl -p`
 
 As I did this setup in AWS Cloud, I do not want to see long EC2 names when running eg: `kubectl get nodes` command.
 That is why I modified /etc/hosts file by adding entires for every node of my cluster infrastructure.
