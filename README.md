@@ -1,14 +1,14 @@
-Below steps are used to prepare your RHEL OS for kubernetes setup
-For this configurtion I am using docker engine. Containers are managed by Kubernetes.
+I this manual I will presen how I was installing Docker engine and Kubernetes cluster.
+I will present how I was adding repository to operating system in order to install Docker and Kubernetes packages.
+I will show what changes i made to the operating system, how cluster was initialized and how to add nodes to the cluster.
 
-#Steps to perform on your OS:
 
-# disable swap
+1.disable swap
 swapoff -a
 
-# add kube_user user to sudoers file without password, this user will be used to manage your Kubernetest cluser and make calls
+I add "kube_user" user to sudoers file without password, this user will be used to manage your Kubernetes cluser and make calls
 to API server with kubectl client, I am using NOPASSWD option so I do not have to provide password, you may force it otherwise.
-# I am running it in my personal AWS lab.
+Keep in mind, I am running it in my personal AWS lab.
 
 echo "kube_user        ALL=(ALL)       NOPASSWD: ALL" >> /etc/sudoers
 
