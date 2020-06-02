@@ -1,7 +1,7 @@
 In this manual I will present how I was installing Docker engine and Kubernetes cluster on EC2 instance in AWS running RedHat 8.
 
 I will present how to add repository to operating system in order to install Docker and Kubernetes packages.
-I will show what changes i made to the operating system, how cluster was initialized and how to add nodes to the cluster.
+I will show what changes I made to the operating system, how cluster was initialized and how to add nodes to the cluster.
 
 You have to be aware that Kubernetes installation requires minimum 2 virtual CPU and 2 GB of RAM.
 That is why if you wan to run it in AWS, it wil not work on Free Tier instance t2.micro.
