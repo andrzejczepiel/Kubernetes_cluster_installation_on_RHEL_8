@@ -161,7 +161,7 @@ To join a node (minion) to a cluster run command on a node which you want to be 
 command dispayed as result of kubeadm init.... executed above
 will look similar to his:
 
-    `$ sudo kubeadm join 10.0.1.228:6443 --token yjp4ep.plt0maylaxemggdq --discovery-token-ca-cert-hash sha256:4ad8121486fe267e1a80100fd5ac86049b0214fe7fae3f10aa923a3d056e782a`
+    `$ sudo kubeadm join 10.0.1.1:6443 --token yjp4ep.plt0maylaxemggdq --discovery-token-ca-cert-hash sha256:4ad8121486fe267e1a80100fd5ac86049b0214fe7fae3f10aa923a3d056e782a`
 
 If by any chance you do not know node join token you can generate with below command:
 get kubernetes kubadm token list and sha
