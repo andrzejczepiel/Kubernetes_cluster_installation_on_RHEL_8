@@ -44,7 +44,7 @@ I change also hostname of every node which will be part of my cluster eg:
     # hostname c1node1, hostname c1master  etc.
 
 
-Let's move one to next part which is preparing repositories for Docker and Kubernetes.
+Let's move on to next part which is preparing repositories for Docker and Kubernetes.
 I am using Docker engine and Kubernetes acts as an orchestrator of containers.
 
 Fist we will create repository file for Kubernetes
