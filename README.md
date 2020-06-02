@@ -4,9 +4,10 @@ I will present how to add repository to operating system in order to install Doc
 I will show what changes I made to the operating system, how cluster was initialized and how to add nodes to the cluster.
 
 You have to be aware that Kubernetes installation requires minimum 2 virtual CPU and 2 GB of RAM.
-That is why if you wan to run it in AWS, it wil not work on Free Tier instance t2.micro.
+That is why if you want to run it in AWS, it wil not work on Free Tier instance t2.micro.
 In my case I was using t3a.medium instance type.
-Infrastructure was build using terraform deployment.
+Infrastructure was build using terraform deployment. 
+(you can check my other terrafrom repositories on https://github.com/andrzejczepiel)
 
 **You can use this manual for installation in cloud or on premisses. If you want to use it on different OS than RedHat, make suitable adjustments in commands.**
 
