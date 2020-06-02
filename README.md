@@ -1,12 +1,14 @@
 In this manual I will present how I was installing Docker engine and Kubernetes cluster on EC2 instance in AWS running RedHat 8.
-I will present how I was adding repository to operating system in order to install Docker and Kubernetes packages.
+
+I will present how to add repository to operating system in order to install Docker and Kubernetes packages.
 I will show what changes i made to the operating system, how cluster was initialized and how to add nodes to the cluster.
+
 You have to be aware that Kubernetes installation requires minimum 2 virtual CPU and 2 GB of RAM.
 That is why if you wan to run it in AWS, it wil not work on Free Tier instance t2.micro.
 In my case I was using t3a.medium instance type.
 Infrastructure was build using terraform deployment.
 
-**You can use this manual for installation in cloud or on premisses. If you want to use it on different OS than RedHat make suitable adjustments in commands.**
+**You can use this manual for installation in cloud or on premisses. If you want to use it on different OS than RedHat, make suitable adjustments in commands.**
 
 One of the requirement for Kubernetes is disabling swap, run below command:
 
@@ -24,7 +26,7 @@ I am also enabling IP forwarding on my system:
 
 `# sysctl -p`
 
-As I did this setup in AWS Cloud, I do not want to see long EC2 names when running eg: kubectl get nodes.
+As I did this setup in AWS Cloud, I do not want to see long EC2 names when running eg: `kubectl get nodes` command.
 That is why I modified /etc/hosts file by adding entires for every node of my cluster infrastructure.
 Here you see that I will have master node (control plane) and three worker nodes.
 Please note that IP address range: 10.0.1.x is an example here. Your environment may differ.
@@ -45,10 +47,10 @@ Please note that IP address range: 10.0.1.x is an example here. Your environment
 
 `EOF`
 
-I change also changing hostname of every node which will be part of my cluster
+I change also hostname of every node which will be part of my cluster
 `eg: hostname c1node1, hostname c1master  etc.`
 
-With this we can cover OS preparation for our cluster.
+
 Let's move one to next part which is preparing repositoried for Docker and Kubernetes.
 I am using Docker engine and Kubernetes acts as an orchestrator of containers.
 
@@ -72,8 +74,10 @@ Fist we will create repository file for Kubernetes
 
 `  EOF`
 
+
 Add Docker repository to system repo list and install other packages which you may need later
 You may use yum or dnf.
+
 
 `# yum install telnet -y`
 
@@ -101,17 +105,22 @@ You may use yum or dnf.
 
 `# yum install wget -y`
 
+
 Refresh repo list
 
 `# dnf repolist -y`
+
 
 Install required kubernetes packages
 
 `# yum install kubeadm kubelet kubectl kubernetes-cni -y`
 
-Enable both services and star Docker
+Enable both services and star Docker service
+
 `# systemctl enable kubelet.service`
+
 `# systemctl enable docker.service`
+
 `# service docker start`
 
 
@@ -126,10 +135,12 @@ NOTE:  there are many other network definitions you can use, calico, is an examp
 
 `$ wget https://docs.projectcalico.org//v3.10/manifests/calico.yaml `
 
-Initialize cluster, API server advertise address is IP of your master node, or control plance node.
+
+Initialize cluster, API server advertise address is IP of your master node, or control plane node.
 192.168.0.0/16 is an example of pod network, you can change this in calico.yaml file 
 
 `$ sudo kubeadm init --pod-network-cidr=192.168.0.0/16 --apiserver-advertise-address=10.0.1.1`
+
 
 Apply network (communication between pods) definition
 
@@ -146,7 +157,9 @@ Copy config file to kube_user home directory and change permissions
 
 `$ sudo chown $(id -u):$(id -g) $HOME/.kube/config`
 
-To join a node (minion) to a cluster run command dispayed as result of kubeadm init.... executed above
+
+To join a node (minion) to a cluster run command on a node which you want to be part of your cluster
+command dispayed as result of kubeadm init.... executed above
 will look similar to his:
 
 `$ sudo kubeadm join 10.0.1.228:6443 --token yjp4ep.plt0maylaxemggdq --discovery-token-ca-cert-hash sha256:4ad8121486fe267e1a80100fd5ac86049b0214fe7fae3f10aa923a3d056e782a`
