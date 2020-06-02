@@ -122,8 +122,11 @@ Copy config file to kube_user home directory and change permissions
     $ sudo chown $(id -u):$(id -g) $HOME/.kube/config`
 
 
-To join a node (minion) to a cluster run command on a node which you want to be part of your cluster
-command dispayed as result of kubeadm init.... executed above
+To join a node (minion) to a cluster run command on a node which you want to be part of your cluster.
+Command which is dispayed as result of 
+
+    $ sudo kubeadm init --pod-network-cidr=192.168.0.0/16 --apiserver-advertise-address=10.0.1.1
+
 will look similar to his:
 
     $ sudo kubeadm join 10.0.1.1:6443 --token yjp4ep.plt0maylaxemggdq --discovery-token-ca-cert-hash sha256:4ad8121486fe267e1a80100fd5ac86049b0214fe7fae3f10aa923a3d056e782a
