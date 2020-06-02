@@ -30,24 +30,17 @@ That is why I modified /etc/hosts file by adding entires for every node of my cl
 Here you see that I will have master node (control plane) and three worker nodes.
 Please note that IP address range: 10.0.1.x is an example here. Your environment may differ.
 
-    `# cat <<EOF > /etc/hosts`
+    # cat <<EOF > /etc/hosts
+    127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+    ::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+    10.0.1.1   c1master
+    10.0.1.2   c1node1
+    10.0.1.3   c1node2
+    10.0.1.4   c1node3
+    EOF
 
-    `127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4`
-
-    `::1         localhost localhost.localdomain localhost6 localhost6.localdomain6`
-
-    `10.0.1.1   c1master`
-
-    `10.0.1.2   c1node1`
-
-    `10.0.1.3   c1node2`
-
-    `10.0.1.4   c1node3`
-
-    `EOF`
-
-I change also hostname of every node which will be part of my cluster
-`eg: hostname c1node1, hostname c1master  etc.`
+I change also hostname of every node which will be part of my cluster eg: 
+    # hostname c1node1, hostname c1master  etc.
 
 
 Let's move one to next part which is preparing repositories for Docker and Kubernetes.
