@@ -1,1 +1,115 @@
-test
+Below steps are used to prepare your RHEL OS for kubernetes setup
+For this configurtion I am using docker engine. Containers are managed by Kubernetes.
+
+#Steps to perform on your OS:
+
+# disable swap
+swapoff -a
+
+# add kube_user user to sudoers file without password, this user will be used to manage your Kubernetest cluser and make calls
+to API server with kubectl client, I am using NOPASSWD option so I do not have to provide password, you may force it otherwise.
+# I am running it in my personal AWS lab.
+
+echo "kube_user        ALL=(ALL)       NOPASSWD: ALL" >> /etc/sudoers
+
+
+# add kubernetes repository to system repo list
+
+  cat <<EOF > /etc/yum.repos.d/kubernetes.repo
+  [kubernetes]
+  name=Kubernetes
+  baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
+  enabled=1
+  gpgcheck=1
+  repo_gpgcheck=1
+  gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+  EOF
+
+# add Docker repository to system repo list and install other packages which you may need later
+# the most important is  making Docker repo, installing docker, 
+
+  "sudo yum install telnet -y",
+  "sudo dnf config-manager --add-repo=https://download.docker.com/linux/centos/docker-ce.repo",
+  "sudo dnf install https://download.docker.com/linux/centos/7/x86_64/stable/Packages/containerd.io-1.2.6-3.3.el7.x86_64.rpm -y",
+  "sudo dnf install docker-ce-3:19.03.8-3.el7 -y",
+  "sudo yum install python3-pip.noarch -y",
+  "sudo pip3.6 install docker-compose",
+  "sudo yum install unzip -y",
+  "sudo yum install gzip -y",
+  "sudo yum install dos2unix.x86_64 -y",
+  "sudo yum install git.x86_64 -y",
+  "sudo service docker start",
+  "sudo adduser kube_user",
+  "sudo usermod -aG docker kube_user",
+  "sudo yum install wget -y"
+
+# refresh repo list
+  dnf repolist -y
+
+# install required kubernetes packages
+  yum install kubeadm kubelet kubectl kubernetes-cni -y
+
+
+# prepare /etc/hosts file with nodes of cluster  , update later with new private IP  (Use your IP, below is just an example)
+
+  cat <<EOF > /etc/hosts
+  127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+  ::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+
+  10.0.1.1  c1master
+  10.0.1.2   c1node1
+  10.0.1.3  c1node2
+  10.0.1.4   c1node3
+  EOF
+  
+# I was also changing hostname of every node which will be part of my cluster
+eg: hostname c1node1, hostname c1master  etc.
+  
+
+# enable both services
+  systemctl enable kubelet.service
+  systemctl enable docker.service
+
+# enable IP forwarding in your system
+  echo "net.ipv4.ip_forward = 1" >> /etc/sysctl.conf
+  sysctl -p
+
+# download network definition files, download those file to home directory of a user which will manage your cluster
+# NOTE:  there are many other network definitions you can use, calico, is an example here.
+
+  su - kube_user
+  cd /home/kube_user/
+  wget https://docs.projectcalico.org/v3.3/getting-started/kubernetes/installation/hosted/rbac-kdd.yaml
+  wget https://docs.projectcalico.org//v3.10/manifests/calico.yaml 
+
+# initialize cluster, API server advertise address is IP of your master node, or control plance node.
+# 192.168.0.0/16 is an example of pod network, you can change this in calico.yaml file 
+
+  sudo kubeadm init --pod-network-cidr=192.168.0.0/16 --apiserver-advertise-address=10.0.1.1
+
+# apply network (communication between pods) definition
+  kubectl apply -f /home/andrzej/rbac-kdd.yaml
+  kubectl apply -f /home/andrzej/calico.yaml	
+
+
+# copy config file to kube_user home directory and change permissions
+  mkdir -p $HOME/.kube
+  sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+  sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+# To join a node (minion) to a cluster run command dispayed as result of kubeadm init.... executed above
+# will look similar to his:
+  sudo kubeadm join 10.0.1.228:6443 --token yjp4ep.plt0maylaxemggdq --discovery-token-ca-cert-hash sha256:4ad8121486fe267e1a80100fd5ac86049b0214fe7fae3f10aa923a3d056e782a
+
+# If by any chance you do not know node join token you can generate with below command:
+# get kubernetes kubadm token list and sha
+  sudo kubeadm token list > node_join_token
+
+# get CA cert hash
+  sudo openssl x509 -pubkey -in /etc/kubernetes/pki/ca.crt | openssl rsa -pubin -outform der 2>/dev/null | openssl dgst -sha256 -hex | sed 's/^.* //' > discovery-token-ca-cert-hash
+
+
+# after that you can join a node to a cluster
+
+#to verify run:
+  kubectl get nodes
