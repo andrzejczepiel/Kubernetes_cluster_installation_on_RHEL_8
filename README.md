@@ -134,6 +134,7 @@ get kubernetes kubadm token list and CA hash
     $ sudo kubeadm token list > node_join_token
 
 Get CA cert hash
+
     $ sudo openssl x509 -pubkey -in /etc/kubernetes/pki/ca.crt | openssl rsa -pubin -outform der 2>/dev/null | openssl dgst -sha256 -hex | sed 's/^.* //' > discovery-token-ca-cert-hash
 
 
