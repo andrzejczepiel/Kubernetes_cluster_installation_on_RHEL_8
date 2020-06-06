@@ -1,5 +1,7 @@
 In this manual I will present how I was installing Docker engine and Kubernetes cluster on EC2 instance in AWS running RedHat 8.
 
+https://andrzejczepiel.github.io/Kubernetes_cluster_setup_RHEL_8/
+
 I will present how to add repository to operating system in order to install Docker and Kubernetes packages.
 I will show what changes I made to the operating system, how cluster was initialized and how to add nodes to the cluster.
 
@@ -7,7 +9,7 @@ You have to be aware that Kubernetes installation requires minimum 2 virtual CPU
 That is why if you want to run it in AWS, it wil not work on Free Tier instance t2.micro.
 In my case I was using t3a.medium instance type.
 Infrastructure was build using terraform deployment. 
-(you can check my other terrafrom repositories on [Link] https://github.com/andrzejczepiel )
+(you can check my other terrafrom repositories on https://github.com/andrzejczepiel
 
 **You can use this manual for installation in cloud or on premisses. If you want to use it on different OS than RedHat, make suitable adjustments in commands.**
 
