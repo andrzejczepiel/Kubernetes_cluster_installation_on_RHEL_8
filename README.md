@@ -122,7 +122,7 @@ Copy config file to kube_user home directory and change permissions
 
     $ mkdir -p $HOME/.kube
     $ sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
-    $ sudo chown $(id -u):$(id -g) $HOME/.kube/config`
+    $ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
 
 To join a node (minion) to a cluster run command on a node which you want to be part of your cluster.
