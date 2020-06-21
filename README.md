@@ -49,7 +49,7 @@ I change also hostname of every node which will be part of my cluster eg:
 Let's move on to next part which is preparing repositories for Docker and Kubernetes.
 I am using Docker engine and Kubernetes acts as an orchestrator of containers.
 
-Fist we will create repository file for Kubernetes
+First we will create repository file for Kubernetes
 
     #  cat <<EOF > /etc/yum.repos.d/kubernetes.repo
     [kubernetes]
