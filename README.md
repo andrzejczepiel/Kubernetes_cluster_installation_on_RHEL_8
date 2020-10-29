@@ -1,7 +1,5 @@
 In this manual I will present how I was installing Docker engine and Kubernetes cluster on EC2 instance in AWS running RedHat 8.
 
-https://andrzejczepiel.github.io/Kubernetes_cluster_setup_RHEL_8/
-
 I will present how to add repository to operating system in order to install Docker and Kubernetes packages.
 I will show what changes I made to the operating system, how cluster was initialized and how to add nodes to the cluster.
 
